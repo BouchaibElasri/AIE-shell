@@ -51,10 +51,6 @@
           name = "cc-clone";
           # description = "Git clone of code commit repo (eg: cc-clone terraform)";
           command = "git clone codecommit::eu-central-1://codecommit-stx@$@";
-        }{ 
-          category = "git";
-          name = "gitp";
-          command = "echo git pull && git pull";
         }];
       };
     }
