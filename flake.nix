@@ -35,6 +35,14 @@
         getCredsAws
       ];
     in rec {
+      packages.default = pkgs.writeShellApplication {
+        name = "awslogin";
+        runtimeInputs = deps;
+        text = ''
+          #!${pkgs.stdenv.shell}
+          ${builtins.readFile ./aws-login.sh}
+        '';
+      };
       devShell = pkgs.devshell.mkShell {
         name = "Secutix CE";
         packages = deps ++ [ pkgs.starship ];
