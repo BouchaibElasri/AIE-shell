@@ -1,5 +1,10 @@
 
 # ensure there is ~/.aws/credentials
+if [ ! -d  "$HOME/.aws/credentials" ]; then
+  mkdir -p "$HOME/.aws/credentials" 
+fi
+
+# ensure there is ~/.aws/credentials
 if ! grep default "$HOME/.aws/credentials" > /dev/null; then
 cat <<EOF >> "$HOME/.aws/credentials"
 [default]
