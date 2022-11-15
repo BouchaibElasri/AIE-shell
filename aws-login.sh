@@ -1,7 +1,7 @@
 
-# ensure there is ~/.aws/credentials
+# ensure there is ~/.aws
 if [ ! -d  "$HOME/.aws/credentials" ]; then
-  mkdir -p "$HOME/.aws/credentials" 
+  mkdir -p "$HOME/.aws" 
 fi
 
 # ensure there is ~/.aws/credentials
