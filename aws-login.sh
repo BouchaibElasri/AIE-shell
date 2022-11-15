@@ -35,4 +35,4 @@ region = eu-central-1
 EOF
 fi
 
-get_creds_aws
+get_creds_aws $@
