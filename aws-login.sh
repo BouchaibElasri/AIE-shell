@@ -35,5 +35,5 @@ region = eu-central-1
 EOF
 fi
 
-# shellcheck disable=SC2086
+# shellcheck disable=SC2068
 get_creds_aws $@
