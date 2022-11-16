@@ -29,36 +29,54 @@
         openssh
         groff
         unzip
-        sudo
         vault
         python3
         getCredsAws
       ];
     in rec {
-      packages.default = pkgs.writeShellApplication {
-        name = "awslogin";
-        runtimeInputs = deps;
-        text = ''
-          #!${pkgs.stdenv.shell}
-          ${builtins.readFile ./aws-login.sh}
-        '';
+      packages = {
+        awslogin = pkgs.writeShellApplication {
+          name = "awslogin";
+          runtimeInputs = deps;
+          text = ''
+            #!${pkgs.stdenv.shell}
+            ${builtins.readFile ./aws-login.sh}
+          '';
+        };
+        cc-clone = pkgs.writeShellApplication {
+          name = "cc-clone";
+          runtimeInputs = deps;
+          text = ''
+            #!${pkgs.stdenv.shell}
+            # shellcheck disable=SC2068,SC2145
+            git clone codecommit::eu-central-1://codecommit-stx@$@
+          '';
+        };
+        default = packages.awslogin;
       };
       devShell = pkgs.devshell.mkShell {
-        name = "Secutix CE";
+        name = "Stx";
+        motd = ''
+          {202}🔨 Stx shell with a bunch of cli utilities{220}
+            - jq
+            - terraform
+            - aws cli v2
+            - vault
+            - git CodeCommit{reset}
+          $(type -p menu &>/dev/null && menu)
+        '';
         packages = deps ++ [ pkgs.starship ];
         bash.extra =''
           source <(starship init bash)
         '';
-        commands = [{ 
-          category = "login";
-          # description =  "Helper for aws login using aws roles and Horizon";
-          name = "awslogin";
-          command = "${builtins.readFile ./aws-login.sh}";
+        commands = [{
+          category = "Utilities";
+          package = packages.awslogin;
+          help =  "Helper for aws login using aws roles and Horizon";
         }{ 
-          category = "git";
-          name = "cc-clone";
-          # description = "Git clone of code commit repo (eg: cc-clone terraform)";
-          command = "git clone codecommit::eu-central-1://codecommit-stx@$@";
+          category = "Utilities";
+          package = packages.cc-clone;
+          help = "Git clone of code commit repo (eg: cc-clone terraform)";
         }];
       };
     }
