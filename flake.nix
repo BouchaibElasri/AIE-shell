@@ -1,12 +1,12 @@
 {
-  description = "Stx shell helper";
+  description = "AIE shell helper";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils/master";
     devshell.url = "github:numtide/devshell/master";
   };
-  nixConfig.bash-prompt = "\\e[0;32m[\\u@stx] \\W>\\e[m ";
+  nixConfig.bash-prompt = "\\e[0;32m[\\u@AIE] \\W>\\e[m ";
 
   outputs = { self, nixpkgs, flake-utils, devshell }:
     flake-utils.lib.eachDefaultSystem (system:
@@ -49,15 +49,15 @@
           text = ''
             #!${pkgs.stdenv.shell}
             # shellcheck disable=SC2068,SC2145
-            git clone codecommit::eu-central-1://codecommit-stx@$@
+            git clone codecommit::eu-central-1://codecommit-AIE@$@
           '';
         };
         default = packages.awslogin;
       };
       devShell = pkgs.devshell.mkShell {
-        name = "Stx";
+        name = "AIE";
         motd = ''
-          {202}🔨 Stx shell with a bunch of cli utilities{220}
+          {202}🔨 AIE shell with a bunch of cli utilities{220}
             - jq
             - terraform
             - aws cli v2
